@@ -5,6 +5,9 @@
 */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize Cinematic Page Preloader
+  initPreloader();
+
   // Initialize Header Scroll Listener
   initStickyHeader();
 
@@ -548,4 +551,34 @@ function initBackToTopButton() {
       behavior: 'smooth'
     });
   });
+}
+
+/* --- 10. Cinematic Page Preloader Engine --- */
+function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  if (!preloader) return;
+
+  // Clear preloader with elegant fade out and DOM removal
+  const clearPreloader = () => {
+    document.body.classList.add('preloader-loaded');
+    setTimeout(() => {
+      preloader.remove();
+    }, 800); // Wait for transition fade to complete before removing
+  };
+
+  // Bind to window load event
+  if (document.readyState === 'complete') {
+    setTimeout(clearPreloader, 1000);
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(clearPreloader, 1000); // 1s delay to let logo pulse cinematic effect play out beautifully
+    });
+  }
+
+  // Safety fallback timeout (maximum 3.5 seconds) in case network, media, or fonts hang
+  setTimeout(() => {
+    if (!document.body.classList.contains('preloader-loaded')) {
+      clearPreloader();
+    }
+  }, 3500);
 }

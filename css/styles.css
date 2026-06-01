@@ -1214,4 +1214,126 @@ footer.footer {
   }
 }
 
+/* --- Cinematic Page Preloader System --- */
+.preloader-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle at center, #260A0B 0%, #150506 100%);
+  z-index: 999999 !important; /* Above everything including modal backdrops */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s cubic-bezier(0.77, 0, 0.175, 1), visibility 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.preloader-inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preloader-logo-wrap {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin-bottom: 24px;
+}
+
+.preloader-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(55, 16, 17, 0.4);
+  position: relative;
+  z-index: 2;
+  --animate-duration: 2s;
+}
+
+.preloader-glow {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  right: -12px;
+  bottom: -12px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.45) 0%, rgba(108, 49, 51, 0.15) 50%, transparent 70%);
+  filter: blur(12px);
+  z-index: 1;
+  animation: preloaderPulse 2.5s infinite ease-in-out;
+}
+
+.preloader-brand-text {
+  font-size: 2.3rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  background: linear-gradient(135deg, #FFD700 0%, #D4AF37 40%, var(--btn-accent-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(108, 49, 51, 0.3));
+  opacity: 0;
+  transform: scale(0.96) translateY(5px);
+  animation: preloaderReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.preloader-tagline {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 30px;
+  opacity: 0;
+  transform: scale(0.96) translateY(5px);
+  animation: preloaderReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.preloader-spinner-bar {
+  width: 140px;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.preloader-progress {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--btn-accent-color), var(--accent-gold));
+  border-radius: 10px;
+  animation: progressFill 2.2s cubic-bezier(0.1, 0.8, 0.1, 1) forwards;
+}
+
+/* Page fade-in reveal states when preloader triggers loaded */
+body.preloader-loaded .preloader-wrap {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes preloaderPulse {
+  0% { transform: scale(0.96); opacity: 0.5; }
+  50% { transform: scale(1.08); opacity: 0.95; }
+  100% { transform: scale(0.96); opacity: 0.5; }
+}
+
+@keyframes preloaderReveal {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes progressFill {
+  0% { width: 0; }
+  45% { width: 65%; }
+  100% { width: 100%; }
+}
+
 
