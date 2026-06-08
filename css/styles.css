@@ -36,11 +36,15 @@
 }
 
 /* --- Base Rules & Typography --- */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--bg-light);
   color: var(--text-dark);
-  overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -1207,8 +1211,8 @@ section {
 
 @media (max-width: 576px) {
   .back-to-top {
-    bottom: 20px !important;
-    right: 15px !important;
+    bottom: 90px !important;
+    right: 24px !important;
     width: 42px;
     height: 42px;
     font-size: 1rem;
@@ -2256,7 +2260,9 @@ body.preloader-loaded .preloader-wrap {
   box-shadow: var(--shadow-lg), 0 10px 30px rgba(212, 175, 55, 0.15);
   display: flex;
   flex-direction: column;
-  position: relative;
+  position: absolute;
+  bottom: 90px;
+  right: 0;
   opacity: 0;
   transform: translateY(15px) scale(0.95);
   visibility: hidden;
@@ -2440,17 +2446,32 @@ body.preloader-loaded .preloader-wrap {
 /* Mobile responsive adjustments */
 @media (max-width: 575.98px) {
   .virtual-diya-container {
-    bottom: 80px !important;
+    bottom: 20px !important;
     right: 15px !important;
   }
   .soundscape-widget {
-    bottom: 80px !important;
+    bottom: 20px !important;
     left: 15px !important;
+  }
+  .diya-lamp-wrap {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .diya-svg {
+    width: 42px !important;
+  }
+  .diya-flame {
+    top: 2px !important;
+    width: 11px !important;
+    height: 22px !important;
   }
   .diya-blessing-box {
     width: 240px !important;
     max-width: calc(100vw - 30px) !important;
     padding: 14px 18px !important;
+    position: absolute !important;
+    bottom: 72px !important;
+    right: 0 !important;
   }
   .soundscape-panel {
     width: 220px !important;
