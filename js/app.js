@@ -11,29 +11,38 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize Header Scroll Listener
   initStickyHeader();
 
-  // Initialize Adaptive Routine Engine
-  initRoutineEngine();
-
-  // Initialize Sankalp Swapper
-  initSankalpSwapper();
-
   // Initialize Dynamic simulated Panchangam
   initPanchangWidget();
 
-  // Initialize Festival Countdown Timer
-  initFestivalCountdown();
-
-  // Initialize Invite Simulator
-  initInviteSimulator();
-
-  // Initialize Multilingual Switcher
-  initLanguageSwitcher();
-
-  // Initialize Daily Quote System
-  initDailyQuoteRotator();
-
   // Initialize Back to Top Button
   initBackToTopButton();
+
+  // Initialize Real Stories Testimonials Slider
+  initStoriesSlider();
+
+  // Initialize Footer Giant Text Scroll Animation
+  initFooterGiantTextAnimation();
+
+  // Initialize Core Features Sliding Carousel
+  initFeaturesCarousel();
+
+  // Initialize Scroll Reveal Elements (Bottom to Top & 3D Tilts)
+  initScrollRevealAnimations();
+
+  // Initialize 3D Tilt Hover Interaction System
+  initTiltHoverCards();
+
+  // Initialize Scroll-linked Parallax & Mockups 3D Tilting
+  initScrollParallax();
+
+  // Initialize Scroll-velocity Skew for Marquee Showcase
+  initScrollSkewMarquee();
+
+  // Initialize Virtual Diya System
+  initVirtualDiya();
+
+  // Initialize Ambient Soundscape Mixer
+  initSoundscapeMixer();
 });
 
 /* --- 1. Sticky Header & Scrollspy Engine --- */
@@ -87,199 +96,6 @@ function initStickyHeader() {
   handleScroll();
 }
 
-/* --- 2. Adaptive Routine Engine --- */
-const ROUTINE_DATABASE = {
-  beginner: {
-    '15': [
-      { name: 'Gratitude Practice', duration: '3 mins', icon: 'bi-heart' },
-      { name: 'Simple Mindfulness Breathing', duration: '5 mins', icon: 'bi-wind' },
-      { name: 'Sacred Quote / Devotional Reading', duration: '7 mins', icon: 'bi-book' }
-    ],
-    '30': [
-      { name: 'Surya Namaskaram / Light Stretch', duration: '8 mins', icon: 'bi-sun' },
-      { name: 'Gratitude & Devotional Intention Setting', duration: '5 mins', icon: 'bi-heart' },
-      { name: 'Mindfulness Meditation', duration: '10 mins', icon: 'bi-wind' },
-      { name: 'Sacred Reading / Stotra Listening', duration: '7 mins', icon: 'bi-music-note-beamed' }
-    ],
-    '60': [
-      { name: 'Surya Namaskaram & Postures', duration: '15 mins', icon: 'bi-sun' },
-      { name: 'Sankalpa & Daily Gratitude Prayers', duration: '10 mins', icon: 'bi-heart' },
-      { name: 'Guided Silent Meditation', duration: '15 mins', icon: 'bi-wind' },
-      { name: 'Spiritual Sacred Chanting', duration: '10 mins', icon: 'bi-music-note-beamed' },
-      { name: 'Devotional Reading (Bhagavad Gita)', duration: '10 mins', icon: 'bi-book' }
-    ]
-  },
-  intermediate: {
-    '15': [
-      { name: 'Pranayama Breathing Cycles', duration: '5 mins', icon: 'bi-wind' },
-      { name: 'Devotional Chanting (Stotras)', duration: '5 mins', icon: 'bi-music-note-beamed' },
-      { name: 'Gratitude & Intention Setting', duration: '5 mins', icon: 'bi-heart' }
-    ],
-    '30': [
-      { name: 'Surya Namaskaram Series', duration: '10 mins', icon: 'bi-sun' },
-      { name: 'Pranayama & Nadishodhana Breathing', duration: '5 mins', icon: 'bi-wind' },
-      { name: 'Japam Chanting with Mala', duration: '10 mins', icon: 'bi-gem' },
-      { name: 'Devotional Scripture Reading', duration: '5 mins', icon: 'bi-book' }
-    ],
-    '60': [
-      { name: 'Full Surya Namaskaram Flow', duration: '15 mins', icon: 'bi-sun' },
-      { name: 'Pranayama & Alternate Nostril Breath', duration: '10 mins', icon: 'bi-wind' },
-      { name: 'Mantra Japam (108 repetitions)', duration: '15 mins', icon: 'bi-gem' },
-      { name: 'Devotional Stotra Recitations', duration: '10 mins', icon: 'bi-music-note-beamed' },
-      { name: 'Scripture Analysis & Reflection', duration: '10 mins', icon: 'bi-book' }
-    ]
-  },
-  devoted: {
-    '15': [
-      { name: 'Pranayama & Silent Dhyana', duration: '7 mins', icon: 'bi-wind' },
-      { name: 'Deep Mantra Japam', duration: '8 mins', icon: 'bi-gem' }
-    ],
-    '30': [
-      { name: 'Surya Namaskaram with Mantras', duration: '10 mins', icon: 'bi-sun' },
-      { name: 'Pranayama & Breath Retention', duration: '5 mins', icon: 'bi-wind' },
-      { name: 'Rigorous Mantra Japam Chants', duration: '10 mins', icon: 'bi-gem' },
-      { name: 'Traditional Pujas / Offerings', duration: '5 mins', icon: 'bi-flower1' }
-    ],
-    '60': [
-      { name: 'Yogic Postures & Detailed Surya Namaskar', duration: '20 mins', icon: 'bi-sun' },
-      { name: 'Deep Pranayama / Kundalini Breathwork', duration: '10 mins', icon: 'bi-wind' },
-      { name: 'Extended Mala Japam Session', duration: '15 mins', icon: 'bi-gem' },
-      { name: 'Traditional Daily Pooja / Archana', duration: '10 mins', icon: 'bi-flower1' },
-      { name: 'Scripture Meditation & Swadhyaya', duration: '5 mins', icon: 'bi-book' }
-    ]
-  }
-};
-
-function initRoutineEngine() {
-  const levelSelect = document.getElementById('routineLevel');
-  const timeSelect = document.getElementById('routineTime');
-  const routineList = document.getElementById('routineList');
-
-  if (!levelSelect || !timeSelect || !routineList) return;
-
-  const updateRoutineDisplay = () => {
-    const level = levelSelect.value;
-    const time = timeSelect.value;
-    const items = ROUTINE_DATABASE[level][time] || [];
-
-    routineList.innerHTML = ''; // Clear current display
-
-    items.forEach((item, index) => {
-      const li = document.createElement('li');
-      li.className = 'routine-item';
-      li.style.animationDelay = `${index * 0.1}s`;
-
-      li.innerHTML = `
-        <div class="d-flex align-items-center">
-          <div class="icon-wrapper-mint me-3 mb-0" style="width:40px; height:40px; font-size:1.1rem;">
-            <i class="bi ${item.icon}"></i>
-          </div>
-          <div>
-            <span class="fw-bold text-dark d-block">${item.name}</span>
-            <small class="text-muted">Structured Practice</small>
-          </div>
-        </div>
-        <span class="badge rounded-pill bg-light text-primary border px-3 py-2">${item.duration}</span>
-      `;
-      routineList.appendChild(li);
-    });
-  };
-
-  levelSelect.addEventListener('change', updateRoutineDisplay);
-  timeSelect.addEventListener('change', updateRoutineDisplay);
-  
-  // Set default initial view
-  updateRoutineDisplay();
-}
-
-/* --- 3. Sankalp Category Swapper --- */
-const SANKALP_DATA = {
-  hanuman: {
-    title: 'Hanuman Sankalp',
-    subtitle: 'Strength, Devotion & Discipline',
-    rules: [
-      'Chant Hanuman Chalisa 1, 7, or 11 times daily.',
-      'Maintain complete pure vegetarian diet.',
-      'Practice absolute truthfulness in speech.',
-      'Early morning rising before sunrise recommended.'
-    ],
-    duration: '40 Days Journey',
-    difficulty: 'Intermediate'
-  },
-  ekadashi: {
-    title: 'Ekadashi Sankalp',
-    subtitle: 'Mental Purification & Fasting',
-    rules: [
-      'Fast from grains and lentils completely.',
-      'Dedicating time to absolute silence (Mauna) during sunset.',
-      'Increase reading or listening of sacred scriptures.',
-      'Gentle activities only; absolute rest for digestion.'
-    ],
-    duration: '24 Hours (Twice a Month)',
-    difficulty: 'Advanced'
-  },
-  japam: {
-    title: 'Japam Sankalp',
-    subtitle: 'Mantra Focus & Mindfulness',
-    rules: [
-      'Perform dedicated repetition of chosen sacred mantra.',
-      'Set clear goals (e.g. 108, 1008, or 10000 chants).',
-      'Use traditional Japam Mala (Rudraksha, Tulsi or Sandalwood).',
-      'Maintain upright spine and static posture throughout.'
-    ],
-    duration: '21 Days Foundation',
-    difficulty: 'Beginner-Friendly'
-  }
-};
-
-function initSankalpSwapper() {
-  const buttons = document.querySelectorAll('[data-sankalp-btn]');
-  const titleEl = document.getElementById('sankalpTitle');
-  const subtitleEl = document.getElementById('sankalpSubtitle');
-  const rulesList = document.getElementById('sankalpRules');
-  const badgeDuration = document.getElementById('sankalpDuration');
-  const badgeDifficulty = document.getElementById('sankalpDifficulty');
-
-  if (!titleEl || buttons.length === 0) return;
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Toggle active states on UI buttons
-      buttons.forEach(b => b.classList.remove('active', 'btn-primary-custom'));
-      buttons.forEach(b => b.classList.add('btn-outline-dark'));
-      
-      btn.classList.add('active', 'btn-primary-custom');
-      btn.classList.remove('btn-outline-dark');
-
-      const key = btn.getAttribute('data-sankalp-btn');
-      const data = SANKALP_DATA[key];
-      if (!data) return;
-
-      // Animate transition using simple opacity transition
-      const panel = document.getElementById('sankalpPanel');
-      panel.style.opacity = '0';
-      panel.style.transform = 'translateY(10px)';
-
-      setTimeout(() => {
-        titleEl.textContent = data.title;
-        subtitleEl.textContent = data.subtitle;
-        badgeDuration.textContent = data.duration;
-        badgeDifficulty.textContent = data.difficulty;
-
-        rulesList.innerHTML = '';
-        data.rules.forEach(rule => {
-          const li = document.createElement('li');
-          li.className = 'mb-2 d-flex align-items-start';
-          li.innerHTML = `<i class="bi bi-patch-check-fill text-primary me-2 mt-1"></i> <span>${rule}</span>`;
-          rulesList.appendChild(li);
-        });
-
-        panel.style.opacity = '1';
-        panel.style.transform = 'translateY(0)';
-      }, 250);
-    });
-  });
-}
 
 /* --- 4. Today's simulated Panchangam --- */
 function initPanchangWidget() {
@@ -306,227 +122,7 @@ function initPanchangWidget() {
   pakshaEl.textContent = (day < 15) ? 'Shukla Paksha (Waxing)' : 'Krishna Paksha (Waning)';
 }
 
-/* --- 5. Festival Countdown Timer --- */
-function initFestivalCountdown() {
-  const daysEl = document.getElementById('cntDays');
-  const hoursEl = document.getElementById('cntHours');
-  const minutesEl = document.getElementById('cntMins');
-  const secondsEl = document.getElementById('cntSecs');
 
-  if (!daysEl) return;
-
-  // Set standard landing destination for next big spiritual observance (e.g. Guru Purnima)
-  // We'll set it to 12 days from today dynamically so the countdown is ALWAYS active and beautiful
-  const targetDate = new Date();
-  targetDate.setDate(targetDate.getDate() + 12);
-  targetDate.setHours(0, 0, 0, 0);
-
-  const updateTimer = () => {
-    const now = new Date().getTime();
-    const difference = targetDate.getTime() - now;
-
-    if (difference <= 0) {
-      // Loop or restart timer so it is never expired
-      targetDate.setDate(targetDate.getDate() + 15);
-      return;
-    }
-
-    const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((difference % (1000 * 60)) / 1000);
-
-    daysEl.textContent = String(d).padStart(2, '0');
-    hoursEl.textContent = String(h).padStart(2, '0');
-    minutesEl.textContent = String(m).padStart(2, '0');
-    secondsEl.textContent = String(s).padStart(2, '0');
-  };
-
-  // Run initial call and loop every second
-  updateTimer();
-  setInterval(updateTimer, 1000);
-}
-
-/* --- 6. Family Circle Invite Simulator --- */
-function initInviteSimulator() {
-  const invitePhoneBtn = document.getElementById('invitePhoneBtn');
-  const inviteLinkBtn = document.getElementById('inviteLinkBtn');
-  const inviteQRBtn = document.getElementById('inviteQRBtn');
-  const inviteOutput = document.getElementById('inviteOutput');
-
-  if (!invitePhoneBtn || !inviteOutput) return;
-
-  const resetActiveButtons = () => {
-    [invitePhoneBtn, inviteLinkBtn, inviteQRBtn].forEach(btn => {
-      btn.classList.remove('btn-primary-custom');
-      btn.classList.add('btn-outline-dark');
-    });
-  };
-
-  invitePhoneBtn.addEventListener('click', () => {
-    resetActiveButtons();
-    invitePhoneBtn.classList.add('btn-primary-custom');
-    invitePhoneBtn.classList.remove('btn-outline-dark');
-
-    inviteOutput.innerHTML = `
-      <div class="card bg-light border-0 p-3 mt-3 animate__animated animate__fadeIn">
-        <label class="form-label fw-bold">Invite via Phone Number</label>
-        <div class="input-group">
-          <input type="tel" class="form-control" placeholder="+91 98765 43210" id="phoneNumberInput">
-          <button class="btn btn-primary-custom" type="button" onclick="alert('Invitation sent successfully!')">Send Invite</button>
-        </div>
-        <small class="text-muted mt-2">Perfect for family members to sync calendars instantly.</small>
-      </div>
-    `;
-  });
-
-  inviteLinkBtn.addEventListener('click', () => {
-    resetActiveButtons();
-    inviteLinkBtn.classList.add('btn-primary-custom');
-    inviteLinkBtn.classList.remove('btn-outline-dark');
-
-    inviteOutput.innerHTML = `
-      <div class="card bg-light border-0 p-3 mt-3 animate__animated animate__fadeIn">
-        <label class="form-label fw-bold">Spiritual Sharing Link</label>
-        <div class="input-group">
-          <input type="text" class="form-control" value="https://sanathanx.app/share/family-circle-58291" readonly id="shareLinkInput">
-          <button class="btn btn-primary-custom" type="button" onclick="navigator.clipboard.writeText(document.getElementById('shareLinkInput').value); alert('Share link copied to clipboard!')"><i class="bi bi-copy"></i> Copy</button>
-        </div>
-        <small class="text-muted mt-2">Send this secure link through any messaging app.</small>
-      </div>
-    `;
-  });
-
-  inviteQRBtn.addEventListener('click', () => {
-    resetActiveButtons();
-    inviteQRBtn.classList.add('btn-primary-custom');
-    inviteQRBtn.classList.remove('btn-outline-dark');
-
-    inviteOutput.innerHTML = `
-      <div class="card bg-light border-0 p-3 mt-3 text-center animate__animated animate__fadeIn">
-        <span class="fw-bold d-block mb-3">Scan QR to Join Family Circle</span>
-        <!-- Crisp SVG Mock QR code -->
-        <svg class="mx-auto mb-3" width="150" height="150" viewBox="0 0 100 100" fill="var(--primary)">
-          <rect width="100" height="100" fill="#ffffff" />
-          <path d="M5,5 h20 v20 h-20 z M9,9 h12 v12 h-12 z M14,14 h2 v2 h-2 z" />
-          <path d="M75,5 h20 v20 h-20 z M79,9 h12 v12 h-12 z M84,14 h2 v2 h-2 z" />
-          <path d="M5,75 h20 v20 h-20 z M9,79 h12 v12 h-12 z M14,84 h2 v2 h-2 z" />
-          <path d="M35,10 h5 v5 h-5 z M45,5 h10 v5 h-10 z M35,20 h10 v5 h-10 z M50,15 h5 v10 h-5 z" />
-          <path d="M60,10 h5 v15 h-5 z M65,5 h5 v5 h-5 z M70,15 h5 v5 h-5 z" />
-          <path d="M10,35 h5 v10 h-5 z M5,50 h15 v5 h-15 z M20,40 h5 v15 h-5 z" />
-          <path d="M35,35 h15 v5 h-15 z M40,45 h10 v10 h-10 z M35,60 h5 v5 h-5 z M50,55 h5 v10 h-5 z" />
-          <path d="M60,35 h10 v5 h-10 z M65,45 h15 v5 h-15 z M60,55 h5 v5 h-5 z M75,55 h10 v15 h-10 z" />
-          <path d="M35,75 h5 v15 h-5 z M45,70 h15 v5 h-15 z M50,85 h10 v10 h-10 z" />
-          <path d="M65,75 h5 v5 h-5 z M75,80 h15 v5 h-15 z M70,90 h10 v5 h-10 z" />
-        </svg>
-        <span class="text-muted d-block small">Invite family members by scanning this code directly in their SanathanX app.</span>
-      </div>
-    `;
-  });
-
-  // Default to phone tab on initial load
-  invitePhoneBtn.click();
-}
-
-/* --- 7. Multilingual Headline Switcher --- */
-const HEADLINE_TRANSLATIONS = {
-  telugu: {
-    heroTitle: 'సనాతన ఎక్స్ - జీవన విధానం',
-    subtitle: 'భక్తి, క్రమశిక్షణ, మరియు ప్రశాంతతను మీ దైనందిన జీవితంలోకి తీసుకురండి.',
-    badge: 'భారతీయ భాషల అనుభవం'
-  },
-  hindi: {
-    heroTitle: 'सनातन एक्स - जीवन का मार्ग',
-    subtitle: 'भक्ति, अनुशासन और मानसिक शांति को अपने दैनिक जीवन का हिस्सा बनाएं।',
-    badge: 'भारतीय भाषा अनुभव'
-  },
-  tamil: {
-    heroTitle: 'சநாதன எக்ஸ் - வாழ்க்கை முறை',
-    subtitle: 'பக்தி, ஒழுக்கம் மற்றும் மன அமைதியை உங்கள் தினசரி வாழ்க்கையில் கொண்டு வாருங்கள்.',
-    badge: 'இந்திய மொழி அனுபவம்'
-  },
-  kannada: {
-    heroTitle: 'ಸನಾತನ ಎಕ್ಸ್ - ಜೀವನ ವಿಧಾನ',
-    subtitle: 'ಭಕ್ತಿ, ಶಿಸ್ತು ಮತ್ತು ಮನಸ್ಸಿನ ಶಾಂತಿಯನ್ನು ನಿಮ್ಮ ದಿನನಿತ್ಯದ ಜೀವನಕ್ಕೆ ತೃಪ್ತಿಗೊಳಿಸಿ.',
-    badge: 'ಭಾರತೀಯ ಭಾಷಾ ಅನುಭವ'
-  },
-  english: {
-    heroTitle: 'Sanathan X - The Way of Life',
-    subtitle: 'Bring devotion, discipline, mindfulness and spiritual balance into your everyday life.',
-    badge: 'Multilingual Experience'
-  }
-};
-
-function initLanguageSwitcher() {
-  const buttons = document.querySelectorAll('[data-lang-btn]');
-  const mainTitleEl = document.getElementById('langTitle');
-  const mainSubEl = document.getElementById('langSub');
-  const mainBadgeEl = document.getElementById('langBadge');
-
-  if (!mainTitleEl || buttons.length === 0) return;
-
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Toggle button highlights
-      buttons.forEach(b => b.classList.remove('btn-primary-custom', 'active'));
-      buttons.forEach(b => b.classList.add('btn-outline-dark'));
-
-      btn.classList.add('btn-primary-custom', 'active');
-      btn.classList.remove('btn-outline-dark');
-
-      const langKey = btn.getAttribute('data-lang-btn');
-      const data = HEADLINE_TRANSLATIONS[langKey];
-      if (!data) return;
-
-      const container = document.getElementById('langSwapContainer');
-      container.style.opacity = '0';
-      container.style.transform = 'translateY(8px)';
-
-      setTimeout(() => {
-        mainTitleEl.textContent = data.heroTitle;
-        mainSubEl.textContent = data.subtitle;
-        mainBadgeEl.textContent = data.badge;
-
-        container.style.opacity = '1';
-        container.style.transform = 'translateY(0)';
-      }, 250);
-    });
-  });
-}
-
-/* --- 8. Dynamic Quote Rotator (Calendar Seeded) --- */
-const WISDOM_QUOTES = [
-  { text: "Discipline in devotion becomes peace in life.", author: "Sanathan Wisdom" },
-  { text: "Mindfulness is the bridge between actions and the spiritual self.", author: "Rig Veda" },
-  { text: "He who has control over their morning routines holds control over their inner peace.", author: "Sacred Upanishads" },
-  { text: "True strength lies in quietness, consistent chanting, and unwavering faith.", author: "Hanuman Upasana" },
-  { text: "Let your actions be dedicated to the higher self; only then will you find absolute freedom.", author: "Bhagavad Gita" },
-  { text: "Aligning daily life with cosmic patterns brings rhythm and health to the body.", author: "Surya Siddhanta" }
-];
-
-function initDailyQuoteRotator() {
-  const quoteTextEl = document.getElementById('quoteText');
-  const quoteAuthorEl = document.getElementById('quoteAuthor');
-  const copyBtn = document.getElementById('copyQuoteBtn');
-
-  if (!quoteTextEl) return;
-
-  // Use current date day-of-year or day-of-month to seed quote choice
-  const today = new Date();
-  const index = (today.getDate() + today.getMonth()) % WISDOM_QUOTES.length;
-  const quote = WISDOM_QUOTES[index];
-
-  quoteTextEl.textContent = `"${quote.text}"`;
-  quoteAuthorEl.textContent = `— ${quote.author}`;
-
-  if (copyBtn) {
-    copyBtn.addEventListener('click', () => {
-      const textToCopy = `${quoteTextEl.textContent} ${quoteAuthorEl.textContent}`;
-      navigator.clipboard.writeText(textToCopy);
-      alert('Daily Quote copied to clipboard!');
-    });
-  }
-}
 
 /* --- 9. Back to Top Scroll Engine --- */
 function initBackToTopButton() {
@@ -582,3 +178,614 @@ function initPreloader() {
     }
   }, 3500);
 }
+
+/* --- 11. Real Stories Slider Navigation --- */
+function initStoriesSlider() {
+  const prevBtn = document.getElementById('prevStoryBtn');
+  const nextBtn = document.getElementById('nextStoryBtn');
+  const viewport = document.getElementById('storiesViewport');
+
+  if (!prevBtn || !nextBtn || !viewport) return;
+
+  const getScrollAmount = () => {
+    const card = viewport.querySelector('.story-slide');
+    return card ? card.offsetWidth + 24 : 340; // card width + gap
+  };
+
+  prevBtn.addEventListener('click', () => {
+    viewport.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', () => {
+    viewport.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+
+  // Toggle button state based on scroll position
+  const handleScroll = () => {
+    const isAtStart = viewport.scrollLeft <= 5;
+    const isAtEnd = viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 5;
+    
+    prevBtn.disabled = isAtStart;
+    nextBtn.disabled = isAtEnd;
+  };
+
+  viewport.addEventListener('scroll', handleScroll);
+  // Run once to initialize button states
+  handleScroll();
+}
+
+/* --- 12. Footer Giant Text Scroll Animation --- */
+function initFooterGiantTextAnimation() {
+  const giantText = document.querySelector('.footer-giant-text');
+  if (!giantText) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        giantText.classList.add('animate-active');
+        observer.unobserve(giantText); // Keep the animated state permanent
+      }
+    });
+  }, {
+    threshold: 0.05
+  });
+
+  observer.observe(giantText);
+}
+
+/* --- 13. General Scroll Reveal Animations --- */
+function initScrollRevealAnimations() {
+  const revealElements = document.querySelectorAll(
+    '.scroll-reveal-text, .scroll-reveal-phone, .scroll-tilt-3d, .scroll-tilt-left, .scroll-tilt-right, .scroll-zoom-tilt, .scroll-tilt-flip-up, .scroll-skew-left, .scroll-skew-right, .scroll-tilt-rotate-z'
+  );
+  if (revealElements.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-active');
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -45px 0px'
+  });
+
+  revealElements.forEach(el => observer.observe(el));
+}
+
+/* --- 14. 3D Tilt Card Hover System --- */
+function initTiltHoverCards() {
+  const cards = document.querySelectorAll('.tilt-hover-card');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const pctX = (x / rect.width) * 100;
+      const pctY = (y / rect.height) * 100;
+      
+      card.style.setProperty('--mouse-x', `${pctX}%`);
+      card.style.setProperty('--mouse-y', `${pctY}%`);
+      
+      // Calculate 3D Tilt angles (max 6 degrees for subtle premium feel)
+      const tiltX = ((rect.height / 2 - y) / (rect.height / 2)) * 5;
+      const tiltY = ((x - rect.width / 2) / (rect.width / 2)) * 5;
+      
+      card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) translateY(-5px)`;
+      card.dataset.isHovered = 'true';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.dataset.isHovered = 'false';
+      if (card.classList.contains('scroll-tilt-phone')) {
+        applySingleScrollTilt(card);
+      } else {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      }
+      card.style.setProperty('--mouse-x', '50%');
+      card.style.setProperty('--mouse-y', '50%');
+    });
+  });
+}
+
+/* --- 15. Scroll-linked Parallax & 3D Tilt Engine --- */
+function applySingleScrollTilt(phone) {
+  const viewportHeight = window.innerHeight;
+  const rect = phone.getBoundingClientRect();
+  if (rect.top < viewportHeight && rect.bottom > 0) {
+    const elementCenter = rect.top + rect.height / 2;
+    const viewportCenter = viewportHeight / 2;
+    const scrollRatio = (elementCenter - viewportCenter) / (viewportHeight / 2 + rect.height / 2);
+    
+    // Tilt calculations: rotX based on scroll pos, rotY slightly skewed
+    const rotateX = Math.max(-12, Math.min(12, scrollRatio * 10));
+    const rotateY = Math.max(-6, Math.min(6, scrollRatio * -4));
+    const scale = Math.max(0.97, Math.min(1.03, 1 + (1 - Math.abs(scrollRatio)) * 0.03));
+    
+    phone.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+  }
+}
+
+function initScrollParallax() {
+  const parallaxItems = document.querySelectorAll('.scroll-parallax-float');
+  const scrollTiltPhones = document.querySelectorAll('.scroll-tilt-phone');
+  
+  const handleScroll = () => {
+    const viewportHeight = window.innerHeight;
+    
+    // Parallax layers (floating badges, background stars)
+    parallaxItems.forEach(item => {
+      const speed = parseFloat(item.getAttribute('data-parallax-speed')) || 0.15;
+      const rect = item.getBoundingClientRect();
+      if (rect.top < viewportHeight && rect.bottom > 0) {
+        const relativeOffset = (rect.top - viewportHeight / 2) * speed;
+        item.style.transform = `translateY(${relativeOffset}px)`;
+      }
+    });
+    
+    // Scroll-linked 3D tilting for mockup devices
+    scrollTiltPhones.forEach(phone => {
+      if (phone.dataset.isHovered !== 'true') {
+        applySingleScrollTilt(phone);
+      }
+    });
+  };
+  
+  window.addEventListener('scroll', () => {
+    window.requestAnimationFrame(handleScroll);
+  });
+  // Execute initially
+  handleScroll();
+}
+
+/* --- 16. Scroll Velocity Skew for Marquee Track --- */
+function initScrollSkewMarquee() {
+  const container = document.querySelector('.marquee-container');
+  if (!container) return;
+  
+  let lastScrollY = window.scrollY;
+  let scrollSpeed = 0;
+  let skewTimeout = null;
+  
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+    scrollSpeed = currentScrollY - lastScrollY;
+    lastScrollY = currentScrollY;
+    
+    // Convert speed to skew degrees (max 5 degrees skew)
+    const skewDeg = Math.max(-5, Math.min(5, scrollSpeed * 0.15));
+    
+    // Apply skewX to the marquee container dynamically
+    container.style.transition = 'transform 0.1s ease';
+    container.style.transform = `skewX(${skewDeg}deg)`;
+    
+    // Smoothly ease back to 0 skew when scroll stops
+    clearTimeout(skewTimeout);
+    skewTimeout = setTimeout(() => {
+      container.style.transition = 'transform 0.4s ease';
+      container.style.transform = 'skewX(0deg)';
+    }, 100);
+  };
+  
+  window.addEventListener('scroll', () => {
+    window.requestAnimationFrame(handleScroll);
+  });
+}
+
+/* --- 17. Virtual Diya & Web Audio System --- */
+const blessingQuotes = [
+  "May your day be filled with devotion, peace, and natural rhythm.",
+  "Let your mind settle like a flame in a windless space.",
+  "Focus on your breath, connect with your Sankalp, and let grace guide you.",
+  "True strength lies in quiet daily discipline and gentle devotion.",
+  "Connect with the cosmic rhythms and let go of artificial deadlines.",
+  "Each step in your Sadhana is a step closer to inner awakening."
+];
+
+let audioCtx = null;
+
+function getAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function triggerBellStrike() {
+  const ctx = getAudioContext();
+  const now = ctx.currentTime;
+  const fundamental = 587.33;
+  const frequencies = [fundamental, fundamental * 1.5, fundamental * 2.0, fundamental * 2.5, fundamental * 3.2];
+  const decays = [1.8, 1.2, 0.8, 0.4, 0.2];
+  const gains = [0.25, 0.15, 0.10, 0.05, 0.02];
+
+  const mainGain = ctx.createGain();
+  mainGain.gain.setValueAtTime(0, now);
+  mainGain.gain.linearRampToValueAtTime(0.4, now + 0.01);
+  mainGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.0);
+
+  frequencies.forEach((freq, idx) => {
+    const osc = ctx.createOscillator();
+    const oscGain = ctx.createGain();
+    osc.frequency.value = freq;
+    oscGain.gain.setValueAtTime(gains[idx], now);
+    oscGain.gain.exponentialRampToValueAtTime(0.0001, now + decays[idx]);
+    osc.connect(oscGain);
+    oscGain.connect(mainGain);
+    osc.start(now);
+    osc.stop(now + decays[idx] + 0.1);
+  });
+
+  const delay = ctx.createDelay();
+  delay.delayTime.value = 0.35;
+
+  const delayFeedback = ctx.createGain();
+  delayFeedback.gain.value = 0.35;
+
+  mainGain.connect(delay);
+  delay.connect(delayFeedback);
+  delayFeedback.connect(delay);
+
+  const bellOutput = ctx.createGain();
+  bellOutput.gain.value = 0.4;
+  
+  mainGain.connect(bellOutput);
+  delay.connect(bellOutput);
+  bellOutput.connect(ctx.destination);
+}
+
+/* --- 18. Telugu Devotional Sound Tracks Mixer --- */
+const soundTracks = {
+  Ganesha: {
+    url: "assets/audio/ganesha.mp3",
+    audio: null
+  },
+  Hanuman: {
+    url: "assets/audio/hanuman.mp3",
+    audio: null
+  },
+  Shiva: {
+    url: "assets/audio/shiva.mp3",
+    audio: null
+  },
+  Gayatri: {
+    url: "assets/audio/gayatri.mp3",
+    audio: null
+  },
+  Rama: {
+    url: "assets/audio/rama.mp3",
+    audio: null
+  }
+};
+
+function playTrack(trackName) {
+  const track = soundTracks[trackName];
+  if (!track) return;
+  
+  if (!track.audio) {
+    track.audio = new Audio(track.url);
+    track.audio.loop = true;
+    
+    // Repeat/loop back every 1 minute (60 seconds)
+    track.audio.addEventListener('timeupdate', () => {
+      if (track.audio.currentTime >= 60) {
+        track.audio.currentTime = 0;
+      }
+    });
+  }
+  
+  track.audio.volume = 0.8;
+  
+  if (track.audio.paused) {
+    // Stop all other tracks first to ensure only one plays at a time
+    Object.keys(soundTracks).forEach(key => {
+      if (key !== trackName) {
+        stopTrack(key);
+      }
+    });
+
+    track.audio.play().catch(err => {
+      console.warn('Playback failed:', err);
+    });
+  }
+}
+
+function stopTrack(trackName) {
+  const track = soundTracks[trackName];
+  if (track && track.audio) {
+    track.audio.pause();
+    track.audio.currentTime = 0;
+  }
+  // Reset the UI button icon and state
+  const btn = document.getElementById('playBtn' + trackName);
+  if (btn) {
+    btn.classList.remove('playing');
+    const icon = btn.querySelector('i');
+    if (icon) {
+      icon.className = 'bi bi-play-fill';
+    }
+  }
+}
+
+function stopAllAudio() {
+  Object.keys(soundTracks).forEach(key => {
+    stopTrack(key);
+  });
+  
+  const toggleBtn = document.getElementById('soundscapeToggleBtn');
+  if (toggleBtn) toggleBtn.classList.remove('playing');
+}
+
+function initVirtualDiya() {
+  const diyaBtn = document.getElementById('diyaLampBtn');
+  const dimOverlay = document.getElementById('diyaDimOverlay');
+  const blessingBox = document.getElementById('diyaBlessingBox');
+  const blessingText = document.getElementById('blessingText');
+  const closeBlessing = document.getElementById('closeBlessingBtn');
+
+  if (!diyaBtn || !dimOverlay || !blessingBox) return;
+
+  diyaBtn.addEventListener('click', () => {
+    const isLit = diyaBtn.classList.toggle('lit');
+    dimOverlay.classList.toggle('active', isLit);
+    
+    if (isLit) {
+      const randomIdx = Math.floor(Math.random() * blessingQuotes.length);
+      blessingText.textContent = blessingQuotes[randomIdx];
+      blessingBox.classList.add('show');
+
+      try {
+        const ctx = getAudioContext();
+        triggerBellStrike();
+      } catch(e) {
+        console.warn('AudioContext not allowed or ready', e);
+      }
+    } else {
+      blessingBox.classList.remove('show');
+    }
+  });
+
+  closeBlessing.addEventListener('click', (e) => {
+    e.stopPropagation();
+    blessingBox.classList.remove('show');
+  });
+
+  dimOverlay.addEventListener('click', () => {
+    diyaBtn.classList.remove('lit');
+    dimOverlay.classList.remove('active');
+    blessingBox.classList.remove('show');
+  });
+}
+
+function initSoundscapeMixer() {
+  const toggleBtn = document.getElementById('soundscapeToggleBtn');
+  const panel = document.getElementById('soundscapePanel');
+  const closeBtn = document.getElementById('panelCloseBtn');
+  const stopBtn = document.getElementById('stopAllAudioBtn');
+
+  if (!toggleBtn || !panel) return;
+
+  toggleBtn.addEventListener('click', () => {
+    panel.classList.toggle('show');
+  });
+
+  closeBtn.addEventListener('click', () => {
+    panel.classList.remove('show');
+  });
+
+  stopBtn.addEventListener('click', stopAllAudio);
+
+  const setupPlayButton = (key) => {
+    const btn = document.getElementById('playBtn' + key);
+    if (!btn) return;
+
+    btn.addEventListener('click', () => {
+      const isPlaying = btn.classList.contains('playing');
+      
+      // Stop all tracks first
+      const keys = ['Ganesha', 'Hanuman', 'Shiva', 'Gayatri', 'Rama'];
+      keys.forEach(k => {
+        stopTrack(k);
+      });
+
+      if (!isPlaying) {
+        // Play this track
+        playTrack(key);
+        btn.classList.add('playing');
+        const icon = btn.querySelector('i');
+        if (icon) {
+          icon.className = 'bi bi-pause-fill';
+        }
+        toggleBtn.classList.add('playing');
+      } else {
+        // Stop current track (already stopped by the foreach, but make sure active states are updated)
+        btn.classList.remove('playing');
+        const icon = btn.querySelector('i');
+        if (icon) {
+          icon.className = 'bi bi-play-fill';
+        }
+        
+        // Remove widget active state if nothing is playing anymore
+        const anyPlaying = keys.some(k => {
+          const b = document.getElementById('playBtn' + k);
+          return b && b.classList.contains('playing');
+        });
+        if (!anyPlaying) {
+          toggleBtn.classList.remove('playing');
+        }
+      }
+    });
+  };
+
+  const keys = ['Ganesha', 'Hanuman', 'Shiva', 'Gayatri', 'Rama'];
+  keys.forEach(setupPlayButton);
+}
+
+/* --- 19. Core Features Sliding Carousel --- */
+function initFeaturesCarousel() {
+  const prevBtn = document.getElementById('prevFeatureBtn');
+  const nextBtn = document.getElementById('nextFeatureBtn');
+  const viewport = document.getElementById('featuresViewport');
+  const track = document.getElementById('featuresTrack');
+  const section = document.getElementById('core-features');
+  const dotsContainer = document.getElementById('featuresDots');
+
+  if (!viewport || !track || !section) return;
+
+  const slides = Array.from(track.querySelectorAll('.feature-slide'));
+  if (slides.length === 0) return;
+
+  let currentIndex = 0;
+  let autoPlayInterval = null;
+
+  // Sync active dots indicators
+  const updateDots = () => {
+    if (!dotsContainer) return;
+    const dots = Array.from(dotsContainer.querySelectorAll('.dot-indicator'));
+    dots.forEach((dot, index) => {
+      if (index === currentIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  };
+
+  // Sync background gradient transitions
+  const updateBackground = () => {
+    const activeSlide = slides[currentIndex];
+    const targetBg = activeSlide.getAttribute('data-bg') || 'bg-white';
+    
+    // Remove background utility classes
+    section.classList.remove('bg-gradient-mint', 'bg-gradient-peach', 'bg-white');
+    
+    // Add target class
+    section.classList.add(targetBg);
+  };
+
+  // Navigate to slide
+  const goToSlide = (index) => {
+    if (index < 0 || index >= slides.length) return;
+    currentIndex = index;
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+    updateDots();
+    updateBackground();
+    
+    if (prevBtn) prevBtn.disabled = false;
+    if (nextBtn) nextBtn.disabled = false;
+
+    // Update active nav links in navbar
+    const navLinks = document.querySelectorAll('.navbar-custom .nav-link');
+    
+    // Check if user is scrolled near the section to update highlights
+    const rect = section.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.7 && rect.bottom > window.innerHeight * 0.2) {
+      navLinks.forEach(link => link.classList.remove('active'));
+      const activeLink = document.querySelector('.navbar-custom .nav-link[href="#core-features"]');
+      if (activeLink) activeLink.classList.add('active');
+    }
+  };
+
+  // Set up button listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      const targetIndex = (currentIndex - 1 + slides.length) % slides.length;
+      goToSlide(targetIndex);
+      resetAutoPlay();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const targetIndex = (currentIndex + 1) % slides.length;
+      goToSlide(targetIndex);
+      resetAutoPlay();
+    });
+  }
+
+  // Set up dots listeners
+  if (dotsContainer) {
+    const dots = Array.from(dotsContainer.querySelectorAll('.dot-indicator'));
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        resetAutoPlay();
+      });
+    });
+  }
+
+  // Autoplay Logic
+  const startAutoPlay = () => {
+    if (autoPlayInterval) return;
+    autoPlayInterval = setInterval(() => {
+      const targetIndex = (currentIndex + 1) % slides.length;
+      goToSlide(targetIndex);
+    }, 5000); // Auto play slide every 5 seconds
+  };
+
+  const stopAutoPlay = () => {
+    if (autoPlayInterval) {
+      clearInterval(autoPlayInterval);
+      autoPlayInterval = null;
+    }
+  };
+
+  const resetAutoPlay = () => {
+    stopAutoPlay();
+    startAutoPlay();
+  };
+
+  // Init Autoplay
+  startAutoPlay();
+
+  // Pause on hover
+  section.addEventListener('mouseenter', stopAutoPlay);
+  section.addEventListener('mouseleave', startAutoPlay);
+
+  // Handle external navbar navigation to specific slides
+  const handleNavClick = (e, targetId, slideIndex) => {
+    e.preventDefault();
+    const targetSection = document.getElementById(targetId);
+    if (targetSection) {
+      // Collapse mobile menu if open
+      const navbarCollapse = document.getElementById('navbarSupportedContent');
+      if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+        if (bsCollapse) bsCollapse.hide();
+        else new bootstrap.Collapse(navbarCollapse).hide();
+      }
+      
+      const offsetTop = targetSection.offsetTop - 80; // offset for sticky header
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+      if (slideIndex !== null) {
+        setTimeout(() => {
+          goToSlide(slideIndex);
+          resetAutoPlay();
+        }, 300);
+      }
+    }
+  };
+
+  const featuresLink = document.querySelector('a[href="#features"]');
+  if (featuresLink) {
+    featuresLink.addEventListener('click', (e) => handleNavClick(e, 'features', null));
+  }
+
+  const exploreLink = document.querySelector('a[href="#core-features"]');
+  if (exploreLink) {
+    exploreLink.addEventListener('click', (e) => handleNavClick(e, 'core-features', null));
+  }
+
+  // Initialize display
+  goToSlide(0);
+}
+
