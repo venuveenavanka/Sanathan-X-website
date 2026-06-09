@@ -36,6 +36,15 @@
 }
 
 /* --- Base Rules & Typography --- */
+html {
+  overflow-x: hidden;
+  scrollbar-width: none;        /* Firefox – hide scrollbar */
+  -ms-overflow-style: none;     /* IE / Edge */
+}
+html::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari / Opera */
+}
+
 html, body {
   overflow-x: hidden;
   width: 100%;
@@ -47,6 +56,28 @@ body {
   color: var(--text-dark);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+  max-width: 100vw;
+  /* Hide vertical scrollbar on body (the actual scroll container) */
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge */
+  /* Disable text selection / copy */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Allow selection inside inputs, textareas and select boxes */
+input, textarea, select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+body::-webkit-scrollbar {
+  display: none;                /* Chrome / Safari / Opera */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -110,6 +141,25 @@ p {
   border-color: var(--btn-accent-color) !important;
   color: #ffffff !important;
   transform: translateY(-2px);
+}
+
+.btn-primary-custom {
+  color: var(--btn-accent-color) !important;
+  border: 1.5px solid rgba(108, 49, 51, 0.3) !important;
+  background-color: rgba(108, 49, 51, 0.05) !important;
+  font-size: 0.9rem !important;
+  padding: 8px 20px !important;
+  border-radius: 100px !important;
+  font-weight: 700 !important;
+  transition: var(--transition-smooth) !important;
+}
+
+.btn-primary-custom:hover, .btn-primary-custom:focus, .btn-primary-custom:active {
+  background-color: var(--btn-accent-color) !important;
+  border-color: var(--btn-accent-color) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 49, 51, 0.2) !important;
 }
 
 a {
@@ -324,6 +374,8 @@ section {
     radial-gradient(circle at 85% 75%, rgba(255, 235, 204, 0.32) 0%, transparent 50%);
   padding: 100px 0 70px;
   overflow: hidden;
+  /* Ensure hero floating cards never trigger horizontal scroll */
+  clip-path: inset(0 0 0 0);
 }
 
 .hero-tagline {
@@ -343,6 +395,8 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* Clip overflowing floating cards so they don't cause horizontal scroll */
+  overflow: visible; /* Cards need to be visible, parent section clips them */
 }
 
 .phone-glow-effect {
@@ -883,12 +937,44 @@ section {
 
 /* --- Download Banner --- */
 .download-banner {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   border-radius: var(--border-radius-lg);
   padding: 80px 60px;
   box-shadow: var(--shadow-lg);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.download-banner-logo {
+  position: absolute;
+  right: -160px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
+  transition: var(--transition-smooth);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 1) 100%);
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 25%, rgba(0, 0, 0, 1) 100%);
+}
+
+@media (max-width: 991.98px) {
+  .download-banner {
+    padding: 40px 24px;
+  }
+  .download-banner-logo {
+    width: 380px;
+    height: 380px;
+    right: -110px;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.9);
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
+  }
 }
 
 /* --- Footer & Details --- */
@@ -1005,6 +1091,8 @@ section {
   justify-content: center;
   align-items: center;
   perspective: 1000px;
+  /* Prevent reminder alert cards from creating horizontal scroll */
+  overflow: visible;
 }
 
 .reminder-phone-mockup {
@@ -1069,6 +1157,7 @@ section {
   line-height: 1.25;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1250,6 +1339,7 @@ section {
   letter-spacing: 0.5px;
   background: linear-gradient(135deg, #FFD700 0%, #D4AF37 40%, var(--btn-accent-color) 100%); /* Gold to Wine gradient */
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
   filter: drop-shadow(0 2px 4px rgba(108, 49, 51, 0.4));
@@ -1263,7 +1353,7 @@ section {
 
 /* --- Giant Footer Backdrop Brand Signature --- */
 .footer-giant-text {
-  font-family: var(--font-logo) !important;
+  font-family: var(--font-body);
   font-size: 11.5vw;
   font-weight: 800;
   line-height: 0.8;
@@ -1278,6 +1368,7 @@ section {
     transparent 100%
   );
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   user-select: none;
   pointer-events: none;
@@ -1416,6 +1507,7 @@ footer.footer {
   margin-bottom: 6px;
   background: linear-gradient(135deg, #FFD700 0%, #D4AF37 40%, var(--btn-accent-color) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 2px 4px rgba(108, 49, 51, 0.3));
   opacity: 0;
@@ -1970,7 +2062,7 @@ body.preloader-loaded .preloader-wrap {
 /* 3D Tilt Card with Cursor-tracking Light Sweep */
 .tilt-hover-card {
   position: relative;
-  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important, box-shadow 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -2014,9 +2106,11 @@ body.preloader-loaded .preloader-wrap {
 }
 
 /* Scroll Tilt 3D Hinge Left (Rotate Y from left) */
+/* Note: translateX uses negative values that could push content out of viewport.
+   We keep translateX small enough that overflow-x:hidden on body clips it cleanly. */
 .scroll-tilt-left {
   opacity: 0;
-  transform: perspective(1200px) rotateY(-22deg) translateX(-60px) scale(0.95);
+  transform: perspective(1200px) rotateY(-18deg) translateX(-40px) scale(0.95);
   transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
@@ -2029,7 +2123,7 @@ body.preloader-loaded .preloader-wrap {
 /* Scroll Tilt 3D Hinge Right (Rotate Y from right) */
 .scroll-tilt-right {
   opacity: 0;
-  transform: perspective(1200px) rotateY(22deg) translateX(60px) scale(0.95);
+  transform: perspective(1200px) rotateY(18deg) translateX(40px) scale(0.95);
   transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1), transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
@@ -2069,7 +2163,7 @@ body.preloader-loaded .preloader-wrap {
 /* --- Scroll Skew Slide Left (Elegant slide-in skew) --- */
 .scroll-skew-left {
   opacity: 0;
-  transform: translateX(-50px) skewX(8deg);
+  transform: translateX(-35px) skewX(6deg);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
@@ -2082,7 +2176,7 @@ body.preloader-loaded .preloader-wrap {
 /* --- Scroll Skew Slide Right (Elegant slide-in skew) --- */
 .scroll-skew-right {
   opacity: 0;
-  transform: translateX(50px) skewX(-8deg);
+  transform: translateX(35px) skewX(-6deg);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
@@ -2136,8 +2230,8 @@ body.preloader-loaded .preloader-wrap {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background: radial-gradient(circle at 85% 85%, rgba(255, 120, 0, 0.12) 0%, rgba(21, 5, 6, 0.75) 50%, rgba(10, 2, 2, 0.9) 100%);
   z-index: 99999;
   opacity: 0;
@@ -2282,6 +2376,7 @@ body.preloader-loaded .preloader-wrap {
   margin-bottom: 6px;
   background: linear-gradient(135deg, #a77c0c 0%, var(--primary) 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

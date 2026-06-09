@@ -22,9 +22,8 @@
       rel="icon"
       type="image/png"
       href="assets/brand/favicon.png"
-      sizes="32x32"
     />
-    <link rel="apple-touch-icon" href="assets/brand/favicon.png" />
+    <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
 
     <!-- Google Fonts integration (Berkshire Swash & Plus Jakarta Sans) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -61,13 +60,13 @@
       <div class="preloader-inner">
         <div class="preloader-logo-wrap">
           <img
-            src="assets/brand/logo.png"
+           src="assets/brand/logo.png"
             alt="Sanathan X"
             class="preloader-logo animate__animated animate__pulse animate__infinite"
           />
           <div class="preloader-glow"></div>
         </div>
-        <div class="preloader-brand-text font-logo">Sanathan X</div>
+        <div class="preloader-brand-text">Sanathan <span class="font-logo">X</span></div>
         <div class="preloader-tagline">The Way of Life</div>
         <div class="preloader-spinner-bar">
           <div class="preloader-progress"></div>
@@ -91,7 +90,7 @@
             class="me-2"
             style="border-radius: 8px"
           />
-          <span class="fw-bold fs-4 text-primary font-logo">Sanathan X</span>
+          <span class="fw-bold fs-4 text-primary">Sanathan <span class="font-logo">X</span></span>
         </a>
         <button
           class="navbar-toggler"
@@ -104,7 +103,7 @@
         >
           <span class="navbar-toggler-icon-custom"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link active" href="#hero">Home</a>
@@ -115,7 +114,6 @@
             <li class="nav-item">
               <a class="nav-link" href="#core-features">Explore</a>
             </li>
-
             <li class="nav-item">
               <a class="nav-link" href="#about">About</a>
             </li>
@@ -125,9 +123,7 @@
           </ul>
           <div class="d-flex">
             <a
-              href="https://play.google.com/store/apps/details?id=com.teamup.sanathan_x"
-              target="_blank"
-              rel="noopener"
+              href="#download"
               class="btn btn-primary-custom d-flex align-items-center"
             >
               <i class="bi bi-download me-2"></i> Download App
@@ -147,8 +143,8 @@
             <span class="section-subtitle"
               >A Spiritual Companion for Daily Living</span
             >
-            <h1 class="hero-tagline text-primary font-logo">
-              Sanathan X<br />
+            <h1 class="hero-tagline text-primary">
+              Sanathan <span class="font-logo">X</span><br />
               <span class="fs-2 text-dark font-body" style="font-weight: 500"
                 >The Way of Life</span
               >
@@ -1177,7 +1173,13 @@
     <section class="bg-white" id="download">
       <div class="container">
         <div class="download-banner scroll-zoom-tilt">
-          <div class="row align-items-center g-5">
+          <!-- Half-cut decorative logo with shadow -->
+          <img
+            src="assets/brand/logo.png"
+            alt="Sanathan X Logo"
+            class="download-banner-logo"
+          />
+          <div class="row align-items-center position-relative" style="z-index: 2;">
             <div class="col-lg-8 text-lg-start text-center">
               <h2 class="fw-bold font-logo text-gold mb-3 fs-1">
                 Begin Your Spiritual Journey Today
@@ -1209,25 +1211,8 @@
                 </a>
               </div>
             </div>
-            <div class="col-lg-4 text-center">
-              <div
-                class="p-3 bg-white rounded-3 d-inline-block shadow-lg border border-white border-opacity-20 tilt-hover-card tilt-glow-shadow"
-              >
-                <!-- QR Code for Store redirect -->
-                <img
-                  src="assets/brand/QR-Code.jpeg"
-                  alt="Scan to Download Sanathan X"
-                  width="140"
-                  height="140"
-                  class="img-fluid rounded"
-                />
-                <small
-                  class="text-muted d-block mt-2"
-                  style="font-size: 0.75rem"
-                  >Scan screen to download</small
-                >
-              </div>
-            </div>
+            <!-- Empty column to reserve the right side space for the absolutely positioned logo -->
+            <div class="col-lg-4"></div>
           </div>
         </div>
       </div>
@@ -1430,7 +1415,7 @@
                 class="me-2"
                 style="border-radius: 8px"
               />
-              <span class="fw-bold fs-4 text-white font-logo">Sanathan X</span>
+              <span class="fw-bold fs-4 text-white">Sanathan <span class="font-logo">X</span></span>
             </a>
             <p
               class="text-light text-opacity-50 small mb-4"
@@ -1451,10 +1436,10 @@
             <ul class="list-unstyled d-grid gap-2 small">
               <li><a href="#nitya-karma">Nitya Karma</a></li>
               <li><a href="#sankalps">Sankalps</a></li>
-              <li><a href="#panchangam">Panchangam</a></li>
+              <li><a href="https://sanathanx.teamup.ink/panchangam" target="_blank">Panchangam</a></li>
               <li><a href="#features">Features</a></li>
-            </ul>
-          </div>
+            </ul> 
+          </div> 
           <div class="col-6 col-lg-2">
             <h6 class="fw-bold text-white mb-3">Company</h6>
             <ul class="list-unstyled d-grid gap-2 small">
@@ -1497,16 +1482,16 @@
           </div>
         </div>
         <div class="footer-bottom text-center text-light text-opacity-50 small">
-          <p class="m-0">
-            &copy; 2026 <span class="footer-brand-highlight">Sanathan X</span>.
-            All rights reserved.
-            <span class="text-gold font-logo">The Way of Life</span>.
+          <p class="m-0 text-white">
+            &copy; 2026 Sanathan <span class="font-logo text-white">X</span>.
+            All Rights Reserved.
+            Powered by <span style="color: #ffffff; font-weight: bold;">Team-</span><span style="color: #ff0000; font-weight: bold;">Up!</span>
           </p>
         </div>
 
         <!-- Giant Brand Backdrop Signature (Responsive Text) -->
         <div class="footer-giant-text select-none" aria-hidden="true">
-          Sanathan X
+          Sanathan <span class="font-logo">X</span>
         </div>
       </div>
     </footer>
@@ -1530,8 +1515,8 @@
             ></button>
           </div>
           <div class="modal-body p-4 text-center text-white">
-            <h4 class="fw-bold text-gold font-logo mb-3">
-              Sanathan X App Showcase
+            <h4 class="fw-bold text-gold mb-3">
+              Sanathan <span class="font-logo">X</span> App Showcase
             </h4>
             <p class="text-light text-opacity-75 mb-4">
               Discover the beautiful flow of customized morning rituals, dynamic
