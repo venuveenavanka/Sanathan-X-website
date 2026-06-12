@@ -25,13 +25,10 @@
     />
     <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
 
-    <!-- Google Fonts integration (Berkshire Swash & Plus Jakarta Sans) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Google Fonts integration (Berkshire Swash & Google Sans Flex) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
 
     <!-- CSS Library CDN Integration (Bootstrap 5, Bootstrap Icons, Animate.css) -->
     <link
@@ -175,18 +172,20 @@
                 <i class="bi bi-google-play me-2"></i> Get on Android
               </a>
               <a
-                href="#download"
+                href="https://apps.apple.com/us/app/sanathan-x/id6774990257"
+                target="_blank"
+                rel="noopener"
                 class="btn btn-primary btn-lg d-flex align-items-center px-4"
               >
                 <i class="bi bi-apple me-2"></i> Get on iOS
               </a>
-              <button
+              <!-- <button
                 class="btn btn-outline-dark btn-lg d-flex align-items-center px-4"
                 data-bs-toggle="modal"
                 data-bs-target="#demoVideoModal"
               >
                 <i class="bi bi-play-circle me-2"></i> Watch Demo
-              </button>
+              </button> -->
             </div>
           </div>
           <div class="col-lg-5">
@@ -358,13 +357,12 @@
           <!-- Text Content Column -->
           <div class="col-lg-6 scroll-tilt-left">
             <span class="section-subtitle mb-2 d-inline-block">Restoring Inner Rhythm</span>
-            <h2 class="section-main-title fw-bold text-primary mb-4 font-logo">
-              Why Choose Sanathan X?
+            <h2 class="section-main-title fw-bold text-primary mb-4">
+              Why Choose Sanathan <span class="font-logo">X</span>?
             </h2>
             <p class="text-muted fs-5 mb-4 leading-relaxed">
               Modern life is built on constant notification spikes, artificial deadlines, and digital noise that disconnect us from natural cosmic rhythms. Sanathan X bridges the gap—translating ancient Vedic calculations and daily Nitya Karma disciplines into a sleek, supportive digital companion that returns peace to your pocket.
             </p>
-            
             <div class="row g-4 mt-2">
               <div class="col-md-6">
                 <div class="d-flex align-items-start">
@@ -425,7 +423,7 @@
               
               <!-- Beautifully animated framed image card -->
               <div class="card-image-frame-wrap tilt-hover-card tilt-glow-shadow" style="border-radius: 32px; overflow: hidden; border: 8px solid rgba(255, 255, 255, 0.8); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08); max-width: 460px; margin: 0 auto; position: relative; z-index: 2;">
-                <img src="assets/mockups/spiritual_harmony.png" alt="Spiritual Clarity and Vedic Alignment" class="w-100 h-100 img-fluid" style="object-fit: cover; transition: transform 0.8s ease;">
+                <img src="assets/mockups/spiritual_harmony.png" alt="Spiritual Clarity and Vedic Alignment" class="w-100 h-100 img-fluid" loading="lazy" style="object-fit: cover; transition: transform 0.8s ease;">
               </div>
             </div>
           </div>
@@ -450,6 +448,7 @@
           <!-- Pillar 1: Nitya Karma -->
           <div
             class="col-lg-3 col-md-6 scroll-tilt-3d"
+            id="nitya-karma"
             style="transition-delay: 0s"
           >
             <div
@@ -470,6 +469,7 @@
                     src="assets/mockups/home.jpg"
                     alt="Nitya Karma Screen"
                     class="pillar-phone-img"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -479,6 +479,7 @@
           <!-- Pillar 2: Sankalp Pathways -->
           <div
             class="col-lg-3 col-md-6 scroll-tilt-3d"
+            id="sankalps"
             style="transition-delay: 0.1s"
           >
             <div
@@ -499,6 +500,7 @@
                     src="assets/mockups/sankalpDeatils1.jpeg"
                     alt="Sankalp Screen"
                     class="pillar-phone-img"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -528,6 +530,7 @@
                     src="assets/mockups/Panchang.png"
                     alt="Calendar Screen"
                     class="pillar-phone-img"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -557,6 +560,7 @@
                     src="assets/mockups/meditation.png"
                     alt="Meditation Screen"
                     class="pillar-phone-img"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -576,7 +580,7 @@
         <div class="d-flex justify-content-between align-items-end flex-wrap mb-5 pb-3 border-bottom border-light">
           <div>
             <span class="section-subtitle mb-2 d-block">Immersive Experience</span>
-            <h2 class="section-main-title fw-bold text-primary mb-0 font-logo">
+            <h2 class="section-main-title fw-bold text-primary mb-0">
               Explore Core Capabilities
             </h2>
           </div>
@@ -605,13 +609,13 @@
                     <!-- Flat premium mockup card with scroll-linked 3D tilt -->
                     <div class="hero-phone-mockup single-phone scroll-tilt-phone tilt-hover-card tilt-glow-shadow" style="border-radius: 36px; border: 10px solid #2e2626">
                       <div class="hero-phone-notch"></div>
-                      <img src="assets/mockups/home.jpg" alt="Home Dashboard Screen" class="w-100 h-100" style="object-fit: cover; object-position: top; border-radius: 26px;">
+                      <img src="assets/mockups/home.jpg" alt="Home Dashboard Screen" class="w-100 h-100" loading="lazy" style="object-fit: cover; object-position: top; border-radius: 26px;">
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-6 order-lg-2 order-1 scroll-tilt-right">
                   <span class="section-subtitle">Adaptive Routine Engine</span>
-                  <h2 class="fw-bold text-primary mb-4 font-logo">
+                  <h2 class="fw-bold text-primary mb-4">
                     Personalized Nitya Karma
                   </h2>
                   <p class="text-muted mb-4 fs-5">
@@ -655,7 +659,7 @@
               <div class="row align-items-center g-5 px-3">
                 <div class="col-lg-6 scroll-tilt-left">
                   <span class="section-subtitle">Transformative Discipline</span>
-                  <h2 class="fw-bold text-primary mb-4 font-logo">
+                  <h2 class="fw-bold text-primary mb-4">
                     Your Sankalp Pathway
                   </h2>
                   <p class="text-muted mb-4 fs-5">
@@ -698,7 +702,7 @@
                     <!-- Flat premium mockup card with scroll-linked 3D tilt -->
                     <div class="hero-phone-mockup single-phone scroll-tilt-phone tilt-hover-card tilt-glow-shadow" style="border-radius: 36px; border: 10px solid #2e2626">
                       <div class="hero-phone-notch"></div>
-                      <img src="assets/mockups/sankalpDeatils2.jpeg" alt="Sankalp Journey Screen" class="w-100 h-100" style="object-fit: cover; object-position: top; border-radius: 26px;">
+                      <img src="assets/mockups/sankalpDeatils2.jpeg" alt="Sankalp Journey Screen" class="w-100 h-100" loading="lazy" style="object-fit: cover; object-position: top; border-radius: 26px;">
                     </div>
                   </div>
                 </div>
@@ -725,13 +729,13 @@
                     <!-- Mobile Phone Mockup with scroll tilt -->
                     <div class="hero-phone-mockup single-phone scroll-tilt-phone tilt-hover-card tilt-glow-shadow" style="border-radius: 36px; border: 10px solid #2e2626; background-color: #0b0707;">
                       <div class="hero-phone-notch"></div>
-                      <img src="assets/mockups/Panchang.png" alt="Panchang Screen" class="w-100 h-100" style="object-fit: cover; object-position: top; border-radius: 26px;">
+                      <img src="assets/mockups/Panchang.png" alt="Panchang Screen" class="w-100 h-100" loading="lazy" style="object-fit: cover; object-position: top; border-radius: 26px;">
                     </div>
                   </div>
                 </div>
                 <div class="col-lg-6 order-lg-2 order-1 scroll-tilt-right">
                   <span class="section-subtitle">Sacred Celestial Timing</span>
-                  <h2 class="fw-bold text-primary font-logo mb-4">
+                  <h2 class="fw-bold text-primary mb-4">
                     Panchangam Wisdom
                   </h2>
                   <p class="text-muted fs-5 mb-4">
@@ -778,7 +782,7 @@
                     <div class="about-glow-effect" style="width: 320px; height: 320px"></div>
                     <div class="reminder-phone-mockup">
                       <div class="hero-phone-notch"></div>
-                      <img src="assets/mockups/home.jpg" alt="Family Calendar Screen" class="w-100 h-100" style="object-fit: cover; object-position: top; border-radius: 26px;" />
+                      <img src="assets/mockups/home.jpg" alt="Family Calendar Screen" class="w-100 h-100" loading="lazy" style="object-fit: cover; object-position: top; border-radius: 26px;" />
                     </div>
                     <!-- Floating Alerts -->
                     <div class="reminder-alert-card reminder-card-1">
@@ -806,7 +810,7 @@
                 </div>
                 <div class="col-lg-6 order-lg-2 order-1 scroll-tilt-right">
                   <span class="section-subtitle">Gentle Notifications</span>
-                  <h2 class="fw-bold text-primary font-logo mb-4">
+                  <h2 class="fw-bold text-primary mb-4">
                     Mindful Reminders
                   </h2>
                   <p class="text-muted fs-5 mb-4">
@@ -1053,8 +1057,8 @@
         <div class="row align-items-center g-5">
           <div class="col-lg-6 scroll-skew-left">
             <span class="section-subtitle">Our Vision</span>
-            <h2 class="fw-bold text-primary font-logo mb-4">
-              About Sanathan X
+            <h2 class="fw-bold text-primary mb-4">
+              About Sanathan <span class="font-logo">X</span>
             </h2>
             <p class="text-muted fs-5 mb-4">
               Sanathan X was built with a simple goal: to make structured
@@ -1095,6 +1099,7 @@
                   src="assets/brand/icon.png"
                   alt="Sanathan X App Icon"
                   class="img-fluid"
+                  loading="lazy"
                   style="
                     width: 140px;
                     height: 140px;
@@ -1178,10 +1183,11 @@
             src="assets/brand/logo.png"
             alt="Sanathan X Logo"
             class="download-banner-logo"
+            loading="lazy"
           />
           <div class="row align-items-center position-relative" style="z-index: 2;">
             <div class="col-lg-8 text-lg-start text-center">
-              <h2 class="fw-bold font-logo text-gold mb-3 fs-1">
+              <h2 class="fw-bold text-gold mb-3 fs-1">
                 Begin Your Spiritual Journey Today
               </h2>
               <p class="text-light text-opacity-75 mb-4 fs-5">
@@ -1202,10 +1208,10 @@
                   <i class="bi bi-google-play me-2"></i> Play Store
                 </a>
                 <a
-                  href="#"
+                  href="https://apps.apple.com/us/app/sanathan-x/id6774990257"
+                  target="_blank"
+                  rel="noopener"
                   class="btn btn-primary d-inline-flex align-items-center"
-                  title="Coming Soon"
-                  onclick="event.preventDefault();"
                 >
                   <i class="bi bi-apple me-2"></i> App Store
                 </a>
@@ -1413,6 +1419,7 @@
                 alt="Sanathan X"
                 height="32"
                 class="me-2"
+                loading="lazy"
                 style="border-radius: 8px"
               />
               <span class="fw-bold fs-4 text-white">Sanathan <span class="font-logo">X</span></span>
@@ -1447,7 +1454,7 @@
               <li><a href="#about">Our Story</a></li>
               <li>
                 <a
-                  href="https://sanathanx.teamup.ink/app/support/"
+                  href="https://sanathanx.teamup.ink/app/support/support.html"
                   target="_blank"
                   >Support Contact</a
                 >
@@ -1459,14 +1466,14 @@
             <ul class="list-unstyled d-grid gap-2 small">
               <li>
                 <a
-                  href="https://sanathanx.teamup.ink/app/support/"
+                  href="https://sanathanx.teamup.ink/app/support/privacy.html"
                   target="_blank"
                   >Privacy & Data Policy</a
                 >
               </li>
               <li>
                 <a
-                  href="https://sanathanx.teamup.ink/app/support/"
+                  href="https://sanathanx.teamup.ink/app/support/terms.html"
                   target="_blank"
                   >Terms of Service</a
                 >
@@ -1544,81 +1551,9 @@
       </div>
     </div>
 
-    <!-- =========================================
-       IMMERSIVE DYNAMIC SYSTEMS (Virtual Diya & Soundscape Mixer)
-       ========================================= -->
-    <!-- Diya Dim Overlay -->
-    <div id="diyaDimOverlay" class="diya-dim-overlay"></div>
 
-    <!-- Floating Diya Container -->
-    <div id="virtualDiyaContainer" class="virtual-diya-container">
-      <div id="diyaBlessingBox" class="diya-blessing-box">
-        <div class="blessing-title font-logo">Today's Blessing</div>
-        <p id="blessingText" class="mb-0">May your day be filled with devotion, peace, and natural rhythm.</p>
-        <button id="closeBlessingBtn" class="close-blessing-btn">&times;</button>
-      </div>
-      
-      <div class="diya-lamp-wrap" id="diyaLampBtn" title="Light the Virtual Diya">
-        <div class="diya-flame" id="diyaFlame">
-          <div class="flame-core"></div>
-          <div class="flame-glow"></div>
-        </div>
-        <!-- Beautiful Clay Diya Shape SVG -->
-        <svg class="diya-svg" viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5,30 C5,45 25,55 50,55 C75,55 95,45 95,30 C95,25 90,20 85,20 C75,20 65,32 50,32 C35,32 25,20 15,20 C10,20 5,25 5,30 Z" fill="#783a22" />
-          <path d="M15,20 C25,20 35,32 50,32 C65,32 75,20 85,20 C80,15 65,10 50,10 C35,10 20,15 15,20 Z" fill="#522413" />
-          <!-- Wick line -->
-          <line x1="50" y1="20" x2="50" y2="30" stroke="#ffd700" stroke-width="2" stroke-linecap="round" />
-          <circle cx="50" cy="20" r="1.5" fill="#ff4500" />
-        </svg>
-      </div>
-    </div>
 
-    <!-- Floating Soundscape Mixer Widget -->
-    <div id="soundscapeWidget" class="soundscape-widget">
-      <button id="soundscapeToggleBtn" class="soundscape-toggle-btn" title="Open Divine Soundscape Mixer">
-        <i class="bi bi-music-note-beamed"></i>
-      </button>
-      <div id="soundscapePanel" class="soundscape-panel">
-        <div class="panel-header">
-          <span class="panel-title font-logo">Divine Soundscape</span>
-          <button id="panelCloseBtn" class="panel-close-btn">&times;</button>
-        </div>
-        <div class="panel-body">
-          <div class="sound-track-row d-flex align-items-center justify-content-between mb-3">
-            <span class="text-light small"><i class="bi bi-music-note-beamed text-gold me-2"></i> Ganapathi Chant</span>
-            <button id="playBtnGanesha" class="sound-play-btn" data-track="Ganesha" aria-label="Play Ganapathi Chant">
-              <i class="bi bi-play-fill"></i>
-            </button>
-          </div>
-          <div class="sound-track-row d-flex align-items-center justify-content-between mb-3">
-            <span class="text-light small"><i class="bi bi-music-note-beamed text-gold me-2"></i> Hanuman Chalisa</span>
-            <button id="playBtnHanuman" class="sound-play-btn" data-track="Hanuman" aria-label="Play Hanuman Chalisa">
-              <i class="bi bi-play-fill"></i>
-            </button>
-          </div>
-          <div class="sound-track-row d-flex align-items-center justify-content-between mb-3">
-            <span class="text-light small"><i class="bi bi-music-note-beamed text-gold me-2"></i> Shiv Mantra</span>
-            <button id="playBtnShiva" class="sound-play-btn" data-track="Shiva" aria-label="Play Shiv Mantra">
-              <i class="bi bi-play-fill"></i>
-            </button>
-          </div>
-          <div class="sound-track-row d-flex align-items-center justify-content-between mb-3">
-            <span class="text-light small"><i class="bi bi-music-note-beamed text-gold me-2"></i> Gayatri Mantram</span>
-            <button id="playBtnGayatri" class="sound-play-btn" data-track="Gayatri" aria-label="Play Gayatri Mantram">
-              <i class="bi bi-play-fill"></i>
-            </button>
-          </div>
-          <div class="sound-track-row d-flex align-items-center justify-content-between mb-3">
-            <span class="text-light small"><i class="bi bi-music-note-beamed text-gold me-2"></i> Sri Rama Chant</span>
-            <button id="playBtnRama" class="sound-play-btn" data-track="Rama" aria-label="Play Sri Rama Chant">
-              <i class="bi bi-play-fill"></i>
-            </button>
-          </div>
-          <button id="stopAllAudioBtn" class="btn btn-sm btn-outline-light w-100 mt-2">Stop Music</button>
-        </div>
-      </div>
-    </div>
+
 
     <!-- Back to Top Button -->
     <button id="backToTopBtn" class="back-to-top" aria-label="Back to Top">

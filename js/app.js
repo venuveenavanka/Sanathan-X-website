@@ -52,12 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Scroll-velocity Skew for Marquee Showcase
   initScrollSkewMarquee();
-
-  // Initialize Virtual Diya System
-  initVirtualDiya();
-
-  // Initialize Ambient Soundscape Mixer
-  initSoundscapeMixer();
 });
 
 /* --- 1. Sticky Header & Scrollspy Engine --- */
@@ -67,9 +61,56 @@ function initStickyHeader() {
   const sections = document.querySelectorAll('section[id]');
   if (!header) return;
 
+  // Create lookup dictionary for nav links to avoid querySelector inside scroll listener
+  const linkLookup = {};
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && href.startsWith('#')) {
+      linkLookup[href.substring(1)] = link;
+    }
+  });
+
+  // Cache sections' positions (offsetTop and offsetHeight) to prevent layout thrashing
+  let sectionPositions = [];
+  const updateSectionPositions = () => {
+    sectionPositions = Array.from(sections).map(sec => ({
+      element: sec,
+      id: sec.getAttribute('id'),
+      top: sec.offsetTop,
+      height: sec.offsetHeight
+    }));
+  };
+
+  updateSectionPositions();
+  window.addEventListener('load', updateSectionPositions);
+  window.addEventListener('resize', updateSectionPositions);
+
+  // Collapse mobile menu when clicking any nav link or the brand logo
+  const collapseMobileMenu = () => {
+    const navbarCollapse = document.getElementById('navbarSupportedContent');
+    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+      const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse);
+      if (bsCollapse) bsCollapse.hide();
+      else new bootstrap.Collapse(navbarCollapse).hide();
+    }
+  };
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', collapseMobileMenu);
+  });
+
+  const brandLink = header.querySelector('.navbar-brand');
+  if (brandLink) {
+    brandLink.addEventListener('click', collapseMobileMenu);
+  }
+
+  let isTicking = false;
+
   const handleScroll = () => {
+    const scrollY = window.scrollY;
+
     // 1. Handle Sticky Header Background
-    if (window.scrollY > 50) {
+    if (scrollY > 50) {
       header.classList.add('navbar-scrolled');
     } else {
       header.classList.remove('navbar-scrolled');
@@ -77,25 +118,23 @@ function initStickyHeader() {
 
     // 2. Custom Robust Scrollspy
     let currentSectionId = '';
-    const scrollPos = window.scrollY + 150; // Offset for header height and comfortable scanning threshold
+    const scrollPos = scrollY + 150; // Offset for header height and comfortable scanning threshold
 
-    sections.forEach(sec => {
-      const top = sec.offsetTop;
-      const height = sec.offsetHeight;
-      if (scrollPos >= top && scrollPos < top + height) {
-        currentSectionId = sec.getAttribute('id');
+    sectionPositions.forEach(sec => {
+      if (scrollPos >= sec.top && scrollPos < sec.top + sec.height) {
+        currentSectionId = sec.id;
       }
     });
 
     if (currentSectionId) {
-      const targetLink = document.querySelector(`.navbar-custom .nav-link[href="#${currentSectionId}"]`);
+      const targetLink = linkLookup[currentSectionId];
       if (targetLink) {
         navLinks.forEach(link => link.classList.remove('active'));
         targetLink.classList.add('active');
       }
     } else {
       // Fallback: If at the very top of the page, ensure Home is highlighted
-      if (window.scrollY < 200) {
+      if (scrollY < 200) {
         navLinks.forEach(link => {
           link.classList.remove('active');
           if (link.getAttribute('href') === '#hero') {
@@ -106,8 +145,17 @@ function initStickyHeader() {
     }
   };
 
-  window.addEventListener('scroll', handleScroll);
-  // Run once on load to catch refreshed states
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, { passive: true });
+
+  // Run once initially
   handleScroll();
 }
 
@@ -144,6 +192,7 @@ function initBackToTopButton() {
   const btn = document.getElementById('backToTopBtn');
   if (!btn) return;
 
+  let isTicking = false;
   const handleScroll = () => {
     if (window.scrollY > 300) {
       btn.classList.add('show');
@@ -152,7 +201,16 @@ function initBackToTopButton() {
     }
   };
 
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, { passive: true });
+
   // Run once on load to sync initial state
   handleScroll();
 
@@ -216,6 +274,7 @@ function initStoriesSlider() {
   });
 
   // Toggle button state based on scroll position
+  let isTicking = false;
   const handleScroll = () => {
     const isAtStart = viewport.scrollLeft <= 5;
     const isAtEnd = viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 5;
@@ -224,7 +283,16 @@ function initStoriesSlider() {
     nextBtn.disabled = isAtEnd;
   };
 
-  viewport.addEventListener('scroll', handleScroll);
+  viewport.addEventListener('scroll', () => {
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, { passive: true });
+
   // Run once to initialize button states
   handleScroll();
 }
@@ -327,30 +395,85 @@ function initScrollParallax() {
   const parallaxItems = document.querySelectorAll('.scroll-parallax-float');
   const scrollTiltPhones = document.querySelectorAll('.scroll-tilt-phone');
   
+  let itemCache = [];
+  let phoneCache = [];
+  
+  // Cache dimensions and document-relative positions to completely avoid layout thrashing during scroll
+  const updateCache = () => {
+    const scrollY = window.scrollY;
+    
+    itemCache = Array.from(parallaxItems).map(item => {
+      const rect = item.getBoundingClientRect();
+      return {
+        element: item,
+        speed: parseFloat(item.getAttribute('data-parallax-speed')) || 0.15,
+        pageTop: rect.top + scrollY,
+        height: rect.height
+      };
+    });
+    
+    phoneCache = Array.from(scrollTiltPhones).map(phone => {
+      const rect = phone.getBoundingClientRect();
+      return {
+        element: phone,
+        pageTop: rect.top + scrollY,
+        height: rect.height
+      };
+    });
+  };
+  
+  // Initialize and bind updates
+  updateCache();
+  window.addEventListener('load', updateCache);
+  window.addEventListener('resize', updateCache);
+  
+  let isTicking = false;
+  
   const handleScroll = () => {
+    const scrollY = window.scrollY;
     const viewportHeight = window.innerHeight;
     
     // Parallax layers (floating badges, background stars)
-    parallaxItems.forEach(item => {
-      const speed = parseFloat(item.getAttribute('data-parallax-speed')) || 0.15;
-      const rect = item.getBoundingClientRect();
-      if (rect.top < viewportHeight && rect.bottom > 0) {
-        const relativeOffset = (rect.top - viewportHeight / 2) * speed;
-        item.style.transform = `translateY(${relativeOffset}px)`;
+    itemCache.forEach(item => {
+      const relativeTop = item.pageTop - scrollY;
+      const relativeBottom = relativeTop + item.height;
+      if (relativeTop < viewportHeight && relativeBottom > 0) {
+        const relativeOffset = (relativeTop - viewportHeight / 2) * item.speed;
+        item.element.style.transform = `translateY(${relativeOffset}px)`;
       }
     });
     
     // Scroll-linked 3D tilting for mockup devices
-    scrollTiltPhones.forEach(phone => {
-      if (phone.dataset.isHovered !== 'true') {
-        applySingleScrollTilt(phone);
+    phoneCache.forEach(phone => {
+      if (phone.element.dataset.isHovered !== 'true') {
+        const relativeTop = phone.pageTop - scrollY;
+        const relativeBottom = relativeTop + phone.height;
+        if (relativeTop < viewportHeight && relativeBottom > 0) {
+          const elementCenter = relativeTop + phone.height / 2;
+          const viewportCenter = viewportHeight / 2;
+          const scrollRatio = (elementCenter - viewportCenter) / (viewportCenter + phone.height / 2);
+          
+          // Tilt calculations: rotX based on scroll pos, rotY slightly skewed
+          const rotateX = Math.max(-12, Math.min(12, scrollRatio * 10));
+          const rotateY = Math.max(-6, Math.min(6, scrollRatio * -4));
+          const scale = Math.max(0.97, Math.min(1.03, 1 + (1 - Math.abs(scrollRatio)) * 0.03));
+          
+          phone.element.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`;
+        }
       }
     });
   };
   
   window.addEventListener('scroll', () => {
-    window.requestAnimationFrame(handleScroll);
-  });
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        isTicking = false;
+      });
+      isTicking = true;
+    }
+  }, { passive: true });
+  
   // Execute initially
   handleScroll();
 }
@@ -363,6 +486,7 @@ function initScrollSkewMarquee() {
   let lastScrollY = window.scrollY;
   let scrollSpeed = 0;
   let skewTimeout = null;
+  let isTicking = false;
   
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
@@ -385,261 +509,16 @@ function initScrollSkewMarquee() {
   };
   
   window.addEventListener('scroll', () => {
-    window.requestAnimationFrame(handleScroll);
-  });
-}
-
-/* --- 17. Virtual Diya & Web Audio System --- */
-const blessingQuotes = [
-  "May your day be filled with devotion, peace, and natural rhythm.",
-  "Let your mind settle like a flame in a windless space.",
-  "Focus on your breath, connect with your Sankalp, and let grace guide you.",
-  "True strength lies in quiet daily discipline and gentle devotion.",
-  "Connect with the cosmic rhythms and let go of artificial deadlines.",
-  "Each step in your Sadhana is a step closer to inner awakening."
-];
-
-let audioCtx = null;
-
-function getAudioContext() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-  return audioCtx;
-}
-
-function triggerBellStrike() {
-  const ctx = getAudioContext();
-  const now = ctx.currentTime;
-  const fundamental = 587.33;
-  const frequencies = [fundamental, fundamental * 1.5, fundamental * 2.0, fundamental * 2.5, fundamental * 3.2];
-  const decays = [1.8, 1.2, 0.8, 0.4, 0.2];
-  const gains = [0.25, 0.15, 0.10, 0.05, 0.02];
-
-  const mainGain = ctx.createGain();
-  mainGain.gain.setValueAtTime(0, now);
-  mainGain.gain.linearRampToValueAtTime(0.4, now + 0.01);
-  mainGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.0);
-
-  frequencies.forEach((freq, idx) => {
-    const osc = ctx.createOscillator();
-    const oscGain = ctx.createGain();
-    osc.frequency.value = freq;
-    oscGain.gain.setValueAtTime(gains[idx], now);
-    oscGain.gain.exponentialRampToValueAtTime(0.0001, now + decays[idx]);
-    osc.connect(oscGain);
-    oscGain.connect(mainGain);
-    osc.start(now);
-    osc.stop(now + decays[idx] + 0.1);
-  });
-
-  const delay = ctx.createDelay();
-  delay.delayTime.value = 0.35;
-
-  const delayFeedback = ctx.createGain();
-  delayFeedback.gain.value = 0.35;
-
-  mainGain.connect(delay);
-  delay.connect(delayFeedback);
-  delayFeedback.connect(delay);
-
-  const bellOutput = ctx.createGain();
-  bellOutput.gain.value = 0.4;
-  
-  mainGain.connect(bellOutput);
-  delay.connect(bellOutput);
-  bellOutput.connect(ctx.destination);
-}
-
-/* --- 18. Telugu Devotional Sound Tracks Mixer --- */
-const soundTracks = {
-  Ganesha: {
-    url: "assets/audio/ganesha.mp3",
-    audio: null
-  },
-  Hanuman: {
-    url: "assets/audio/hanuman.mp3",
-    audio: null
-  },
-  Shiva: {
-    url: "assets/audio/shiva.mp3",
-    audio: null
-  },
-  Gayatri: {
-    url: "assets/audio/gayatri.mp3",
-    audio: null
-  },
-  Rama: {
-    url: "assets/audio/rama.mp3",
-    audio: null
-  }
-};
-
-function playTrack(trackName) {
-  const track = soundTracks[trackName];
-  if (!track) return;
-  
-  if (!track.audio) {
-    track.audio = new Audio(track.url);
-    track.audio.loop = true;
-    
-    // Repeat/loop back every 1 minute (60 seconds)
-    track.audio.addEventListener('timeupdate', () => {
-      if (track.audio.currentTime >= 60) {
-        track.audio.currentTime = 0;
-      }
-    });
-  }
-  
-  track.audio.volume = 0.8;
-  
-  if (track.audio.paused) {
-    // Stop all other tracks first to ensure only one plays at a time
-    Object.keys(soundTracks).forEach(key => {
-      if (key !== trackName) {
-        stopTrack(key);
-      }
-    });
-
-    track.audio.play().catch(err => {
-      console.warn('Playback failed:', err);
-    });
-  }
-}
-
-function stopTrack(trackName) {
-  const track = soundTracks[trackName];
-  if (track && track.audio) {
-    track.audio.pause();
-    track.audio.currentTime = 0;
-  }
-  // Reset the UI button icon and state
-  const btn = document.getElementById('playBtn' + trackName);
-  if (btn) {
-    btn.classList.remove('playing');
-    const icon = btn.querySelector('i');
-    if (icon) {
-      icon.className = 'bi bi-play-fill';
-    }
-  }
-}
-
-function stopAllAudio() {
-  Object.keys(soundTracks).forEach(key => {
-    stopTrack(key);
-  });
-  
-  const toggleBtn = document.getElementById('soundscapeToggleBtn');
-  if (toggleBtn) toggleBtn.classList.remove('playing');
-}
-
-function initVirtualDiya() {
-  const diyaBtn = document.getElementById('diyaLampBtn');
-  const dimOverlay = document.getElementById('diyaDimOverlay');
-  const blessingBox = document.getElementById('diyaBlessingBox');
-  const blessingText = document.getElementById('blessingText');
-  const closeBlessing = document.getElementById('closeBlessingBtn');
-
-  if (!diyaBtn || !dimOverlay || !blessingBox) return;
-
-  diyaBtn.addEventListener('click', () => {
-    const isLit = diyaBtn.classList.toggle('lit');
-    dimOverlay.classList.toggle('active', isLit);
-    
-    if (isLit) {
-      const randomIdx = Math.floor(Math.random() * blessingQuotes.length);
-      blessingText.textContent = blessingQuotes[randomIdx];
-      blessingBox.classList.add('show');
-
-      try {
-        const ctx = getAudioContext();
-        triggerBellStrike();
-      } catch(e) {
-        console.warn('AudioContext not allowed or ready', e);
-      }
-    } else {
-      blessingBox.classList.remove('show');
-    }
-  });
-
-  closeBlessing.addEventListener('click', (e) => {
-    e.stopPropagation();
-    blessingBox.classList.remove('show');
-  });
-
-  dimOverlay.addEventListener('click', () => {
-    diyaBtn.classList.remove('lit');
-    dimOverlay.classList.remove('active');
-    blessingBox.classList.remove('show');
-  });
-}
-
-function initSoundscapeMixer() {
-  const toggleBtn = document.getElementById('soundscapeToggleBtn');
-  const panel = document.getElementById('soundscapePanel');
-  const closeBtn = document.getElementById('panelCloseBtn');
-  const stopBtn = document.getElementById('stopAllAudioBtn');
-
-  if (!toggleBtn || !panel) return;
-
-  toggleBtn.addEventListener('click', () => {
-    panel.classList.toggle('show');
-  });
-
-  closeBtn.addEventListener('click', () => {
-    panel.classList.remove('show');
-  });
-
-  stopBtn.addEventListener('click', stopAllAudio);
-
-  const setupPlayButton = (key) => {
-    const btn = document.getElementById('playBtn' + key);
-    if (!btn) return;
-
-    btn.addEventListener('click', () => {
-      const isPlaying = btn.classList.contains('playing');
-      
-      // Stop all tracks first
-      const keys = ['Ganesha', 'Hanuman', 'Shiva', 'Gayatri', 'Rama'];
-      keys.forEach(k => {
-        stopTrack(k);
+    if (!isTicking) {
+      window.requestAnimationFrame(() => {
+        handleScroll();
+        isTicking = false;
       });
-
-      if (!isPlaying) {
-        // Play this track
-        playTrack(key);
-        btn.classList.add('playing');
-        const icon = btn.querySelector('i');
-        if (icon) {
-          icon.className = 'bi bi-pause-fill';
-        }
-        toggleBtn.classList.add('playing');
-      } else {
-        // Stop current track (already stopped by the foreach, but make sure active states are updated)
-        btn.classList.remove('playing');
-        const icon = btn.querySelector('i');
-        if (icon) {
-          icon.className = 'bi bi-play-fill';
-        }
-        
-        // Remove widget active state if nothing is playing anymore
-        const anyPlaying = keys.some(k => {
-          const b = document.getElementById('playBtn' + k);
-          return b && b.classList.contains('playing');
-        });
-        if (!anyPlaying) {
-          toggleBtn.classList.remove('playing');
-        }
-      }
-    });
-  };
-
-  const keys = ['Ganesha', 'Hanuman', 'Shiva', 'Gayatri', 'Rama'];
-  keys.forEach(setupPlayButton);
+      isTicking = true;
+    }
+  }, { passive: true });
 }
+
 
 /* --- 19. Core Features Sliding Carousel --- */
 function initFeaturesCarousel() {
