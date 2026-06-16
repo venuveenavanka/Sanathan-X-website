@@ -1284,7 +1284,7 @@ section {
 
 @media (max-width: 576px) {
   .back-to-top {
-    bottom: 90px !important;
+    bottom: 24px !important; /* Keep it further down for a cleaner, symmetric look on mobile */
     right: 24px !important;
     width: 42px;
     height: 42px;
@@ -1428,6 +1428,27 @@ footer.footer {
   /* Disable horizontal active underlines in vertical mobile drawer layout */
   .navbar-custom .nav-link::after {
     display: none !important;
+  }
+
+  /* Enhance the download button readability & contrast inside the dark mobile menu drawer */
+  .navbar-custom .navbar-collapse .btn-primary-custom {
+    color: #ffffff !important;
+    background-color: var(--btn-accent-color) !important;
+    border: 1.5px solid #ffffff !important;
+    width: 100% !important;
+    justify-content: center !important;
+    margin-top: 15px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    padding: 10px 24px !important;
+    transition: var(--transition-smooth) !important;
+  }
+  
+  .navbar-custom .navbar-collapse .btn-primary-custom:hover,
+  .navbar-custom .navbar-collapse .btn-primary-custom:focus {
+    background-color: #ffffff !important;
+    color: var(--primary-dark) !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25) !important;
   }
 }
 
