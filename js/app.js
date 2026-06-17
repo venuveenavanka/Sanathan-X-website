@@ -104,6 +104,11 @@ function initStickyHeader() {
     brandLink.addEventListener('click', collapseMobileMenu);
   }
 
+  const downloadBtn = header.querySelector('.btn-primary-custom');
+  if (downloadBtn) {
+    downloadBtn.addEventListener('click', collapseMobileMenu);
+  }
+
   let isTicking = false;
 
   const handleScroll = () => {

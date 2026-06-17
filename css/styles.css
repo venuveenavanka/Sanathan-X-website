@@ -41,11 +41,18 @@ html {
   scroll-padding-top: 80px;     /* Offset for sticky header */
 }
 
-html, body {
+html {
   width: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Prevent horizontal scroll / right-side blank space on mobile devices */
+  overflow-x: hidden; /* Prevent horizontal scroll on page */
+}
+
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: clip; /* Clip horizontal overflow on body without triggering a double vertical scrollbar */
 }
 
 body {
