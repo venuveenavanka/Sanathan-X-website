@@ -614,33 +614,10 @@ function initFeaturesCarousel() {
     });
   }
 
-  // Autoplay Logic
-  const startAutoPlay = () => {
-    if (autoPlayInterval) return;
-    autoPlayInterval = setInterval(() => {
-      const targetIndex = (currentIndex + 1) % slides.length;
-      goToSlide(targetIndex);
-    }, 5000); // Auto play slide every 5 seconds
-  };
-
-  const stopAutoPlay = () => {
-    if (autoPlayInterval) {
-      clearInterval(autoPlayInterval);
-      autoPlayInterval = null;
-    }
-  };
-
-  const resetAutoPlay = () => {
-    stopAutoPlay();
-    startAutoPlay();
-  };
-
-  // Init Autoplay
-  startAutoPlay();
-
-  // Pause on hover
-  section.addEventListener('mouseenter', stopAutoPlay);
-  section.addEventListener('mouseleave', startAutoPlay);
+  // Autoplay Logic (Disabled)
+  const startAutoPlay = () => {};
+  const stopAutoPlay = () => {};
+  const resetAutoPlay = () => {};
 
   // Handle external navbar navigation to specific slides
   const handleNavClick = (e, targetId, slideIndex) => {
