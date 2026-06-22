@@ -1,0 +1,14 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.teamup.sanathan_x",
+      "sha256_cert_fingerprints": [
+        "A5:F2:E4:CE:7F:33:16:3E:36:31:27:B3:1E:3D:01:60:1A:45:19:BE:FD:07:2B:CC:48:1C:72:0C:20:55:19:68",
+        "ED:84:DB:D7:3B:2B:B2:07:CD:12:08:F4:1E:5F:4D:FE:05:84:6F:C4:40:68:4E:85:36:D9:91:BB:EC:5F:A1:5A",
+        "08:50:B3:BC:71:54:F9:25:64:F0:CF:17:A9:35:5E:57:35:93:A1:5F:24:20:B7:3E:91:A7:98:75:5A:5B:3F:B4"
+      ]
+    }
+  }
+]
