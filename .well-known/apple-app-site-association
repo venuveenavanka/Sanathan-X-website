@@ -1,0 +1,14 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "9P33ZVQAJ3.com.teamup.sanathanx",
+        "paths": [
+          "NOT /",
+          "*"
+        ]
+      }
+    ]
+  }
+}

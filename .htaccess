@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Existing files
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Existing directories
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Only rewrite deep links
+RewriteRule ^(join|sankalp|calendar)(/.*)?$ /index.html [L]
